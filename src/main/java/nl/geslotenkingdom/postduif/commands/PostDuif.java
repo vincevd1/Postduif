@@ -77,6 +77,7 @@ public class PostDuif implements CommandExecutor {
 							} else p.sendMessage(Utils.chat("&cEen speler genaamd '" + args[0] + "' bestaat niet of is niet online!"));
 						} else p.sendMessage(Utils.chat("&cJe hebt een gesigned book of een book and quill met het bericht in je hand nodig om het bericht te kunnen versturen"));
 				}
+
 			} else {
 				if (p.getInventory().getItemInHand().getType().equals(Material.WRITTEN_BOOK) || p.getInventory().getItemInHand().getType().equals(Material.BOOK_AND_QUILL)) {
 					Player target = plugin.getServer().getPlayer(args[0]);
