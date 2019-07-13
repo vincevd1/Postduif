@@ -1,0 +1,10 @@
+name: PostDuif
+version: 0.1
+author: GeslotenKingdom
+main: nl.geslotenkingdom.postduif.main.Main
+description: Postduif
+
+commands:
+  postduif:
+    description: Stuur een bericht via een postduif
+    aliases: [] 
