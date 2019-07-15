@@ -78,8 +78,8 @@ public class PostDuif implements CommandExecutor {
                                         p.sendMessage(Utils.chat("&aJe bericht is succesvol verzonden!"));
 
                                         List<ItemStack> messages = new ArrayList<>();
+                                        if(message.get(p) != null && !message.get(p).isEmpty()) messages.addAll(message.get(p));
                                         messages.add(p.getInventory().getItemInHand());
-                                        if(message.get(p) != null && message.get(p).isEmpty()) messages.addAll(message.get(p));
                                         message.put(p, messages);
 
                                         p.getInventory().setItemInHand(null);
@@ -103,8 +103,8 @@ public class PostDuif implements CommandExecutor {
                                     p.sendMessage(Utils.chat("&aJe bericht is succesvol verzonden!"));
 
                                     List<ItemStack> messages = new ArrayList<>();
+                                    if(message.get(p) != null && !message.get(p).isEmpty()) messages.addAll(message.get(p));
                                     messages.add(p.getInventory().getItemInHand());
-                                    if(message.get(p) != null && message.get(p).isEmpty()) messages.addAll(message.get(p));
                                     message.put(p, messages);
 
                                     p.getInventory().setItemInHand(null);

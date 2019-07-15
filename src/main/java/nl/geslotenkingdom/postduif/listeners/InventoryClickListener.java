@@ -24,7 +24,7 @@ public class InventoryClickListener implements Listener {
 	public void onClick(InventoryClickEvent e) {
 		String title = e.getInventory().getTitle();
 		if (title.equals(GUI.inventory_name)) {
-			if (e.getCurrentItem() == null || e.getCurrentItem().getType().equals(Material.WRITTEN_BOOK) || e.getCursor().getType().equals(Material.WRITTEN_BOOK))
+			if (e.getCurrentItem() == null || e.getCurrentItem().getType().equals(Material.WRITTEN_BOOK) || e.getCursor().getType().equals(Material.WRITTEN_BOOK) || e.getCurrentItem().getType().equals(Material.BOOK_AND_QUILL) || e.getCursor().getType().equals(Material.BOOK_AND_QUILL))
 				return;
 			else
 				e.setCancelled(true);
