@@ -65,32 +65,34 @@ public class PostDuif implements CommandExecutor {
                         if (secondsleft >= 0) { //Is meer dan of is 0
                             p.sendMessage(Utils.chat("&cJe postduif is nog niet teruggekeerd wacht nog &4" + secondsleft + " &cseconden"));
                         } else {
-                            if (p.getInventory().getItemInHand().getType().equals(Material.WRITTEN_BOOK) || p.getInventory().getItemInHand().getType().equals(Material.BOOK_AND_QUILL)) {
+                            if (p.getInventory().getItemInMainHand().getType().equals(Material.WRITTEN_BOOK) || p.getInventory().getItemInMainHand().getType().equals(Material.BOOK_AND_QUILL)) {
                                 Player target = plugin.getServer().getPlayer(args[0]);
                                 if (target != null) {
                                     if (!p.equals(target)) {
-                                        // Pytagoras om de diagonale lengte uit te rekenen tussen de twee personen en
-                                        // dat gedeelt door 10 om de tijd uit te rekenen
-                                        int returnTimeNumber = (int) Math.round(Math.sqrt(Math.pow(target.getLocation().getX() - p.getLocation().getX(), 2) + Math.pow(target.getLocation().getZ() - p.getLocation().getZ(), 2)) / 50);
-                                        if (returnTimeNumber < 0) returnTimeNumber *= -1;
-                                        returnTime.put(p, returnTimeNumber * 2);
-                                        cooldown.put(p, System.currentTimeMillis());
-                                        p.sendMessage(Utils.chat("&aJe bericht is succesvol verzonden!"));
+                                        if(!(p.getInventory().getItemInMainHand().getAmount() > 1)) {
+                                            // Pytagoras om de diagonale lengte uit te rekenen tussen de twee personen en
+                                            // dat gedeelt door 10 om de tijd uit te rekenen
+                                            int returnTimeNumber = (int) Math.round(Math.sqrt(Math.pow(target.getLocation().getX() - p.getLocation().getX(), 2) + Math.pow(target.getLocation().getZ() - p.getLocation().getZ(), 2)) / 50);
+                                            if (returnTimeNumber < 0) returnTimeNumber *= -1;
+                                            returnTime.put(p, returnTimeNumber * 2);
+                                            cooldown.put(p, System.currentTimeMillis());
+                                            p.sendMessage(Utils.chat("&aJe bericht is succesvol verzonden!"));
 
-                                        List<ItemStack> messages = new ArrayList<>();
-                                        if(message.get(p) != null && !message.get(p).isEmpty()) messages.addAll(message.get(p));
-                                        messages.add(p.getInventory().getItemInHand());
-                                        message.put(p, messages);
+                                            List<ItemStack> messages = new ArrayList<>();
+                                            if (message.get(p) != null && !message.get(p).isEmpty()) messages.addAll(message.get(p));
+                                            messages.add(p.getInventory().getItemInMainHand());
+                                            message.put(p, messages);
 
-                                        p.getInventory().setItemInHand(null);
-                                        sendArrival(p, target, returnTimeNumber);
+                                            p.getInventory().setItemInHand(null);
+                                            sendArrival(p, target, returnTimeNumber);
+                                        }
                                     } else p.sendMessage(Utils.chat("&cJe kan geen postduif naar jezelf sturen!"));
                                 } else p.sendMessage(Utils.chat("&cEen speler genaamd '" + args[0] + "' bestaat niet of is niet online!"));
                             } else p.sendMessage(Utils.chat("&cJe hebt een gesigned book of een book and quill met het bericht in je hand nodig om het bericht te kunnen versturen"));
                         }
 
                     } else {
-                        if (p.getInventory().getItemInHand().getType().equals(Material.WRITTEN_BOOK) || p.getInventory().getItemInHand().getType().equals(Material.BOOK_AND_QUILL)) {
+                        if (p.getInventory().getItemInMainHand().getType().equals(Material.WRITTEN_BOOK) || p.getInventory().getItemInMainHand().getType().equals(Material.BOOK_AND_QUILL)) {
                             Player target = plugin.getServer().getPlayer(args[0]);
                             if (target != null) {
                                 if (!p.equals(target)) {
@@ -104,9 +106,8 @@ public class PostDuif implements CommandExecutor {
 
                                     List<ItemStack> messages = new ArrayList<>();
                                     if(message.get(p) != null && !message.get(p).isEmpty()) messages.addAll(message.get(p));
-                                    messages.add(p.getInventory().getItemInHand());
+                                    messages.add(p.getInventory().getItemInMainHand());
                                     message.put(p, messages);
-
                                     p.getInventory().setItemInHand(null);
                                     sendArrival(p, target, returnTimeNumber);
                                 } else p.sendMessage(Utils.chat("&cJe kan geen postduif naar jezelf sturen!"));
