@@ -13,7 +13,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -27,13 +26,8 @@ public class PostDuif implements CommandExecutor {
 
     private HashMap<Player, Integer> returnTime = new HashMap<Player, Integer>();
     private HashMap<Player, Long> cooldown = new HashMap<Player, Long>();
-<<<<<<< HEAD
-    public static HashMap<Player, Player> postduif = new HashMap<Player, Player>();
-    public static HashMap<Player, ItemStack> message = new HashMap<Player, ItemStack>();
-=======
     public static HashMap<Player, List<ItemStack>> message = new HashMap<>();
     private Map<Player, List<Player>> postduif = new HashMap<>();
->>>>>>> develop
 
     private Main plugin;
 
@@ -49,37 +43,15 @@ public class PostDuif implements CommandExecutor {
         }
 
         Player p = (Player) sender;
-<<<<<<< HEAD
-//Dit werkt meestal alleen bij strings, niet bij volledige methodes.
-        //Het beste kan je ermee spelen, en als die errors gewoon
-        //De .jar ervan erindoen :P
-
-        //TODO: Bug fixen dat als je 2 boekjes stuurt (ontvanger heeft het niet gelezen) dat die dan boekje nog laat pakken
-        // CTRL + ALT + L (Instellingen veranderen) (Moet slapen)
-=======
 
         //TODO: Bug fixen dat als je 2 boekjes stuurt (ontvanger heeft het niet gelezen) dat die dan boekje nog laat pakken
         // CTRL + ALT + L (Instellingen veranderen)
->>>>>>> develop
         if (p.hasPermission("postduif.use")) {
             if (args.length > 0) {
                 if (args[0].equalsIgnoreCase("open")) {
                     if (args.length > 1) {
                         Player from = plugin.getServer().getPlayer(args[1]);
                         if (from != null) {
-<<<<<<< HEAD
-                            if (postduif.containsKey(from) && p.equals(postduif.get(from))) {
-                                p.openInventory(GUI.GUI(from, p));
-                                postduif.put(from, null);
-                            } else
-                                p.sendMessage(Utils.chat("&cJe hebt geen bericht ontvangen van &4" + args[1] + "&c!"));
-                        } else
-                            p.sendMessage(Utils.chat("&cEen speler genaamd &4" + args[1] + " &cbestaat niet of is niet online!"));
-                    } else
-                        p.sendMessage(Utils.chat("&cGeef alstjeblieft een speler op waarvan je het bericht wilt lezen als je die hebt ontvangen"));
-                } else {
-                    //Je ziet dan info van bepaalde variablelen
-=======
                             if (postduif.get(from).contains(p)) {
                                 p.openInventory(GUI.GUI(from, p));
                                 postduif.get(from).remove(p);
@@ -88,37 +60,11 @@ public class PostDuif implements CommandExecutor {
                     } else p.sendMessage(Utils.chat("&cGeef alstjeblieft een speler op waarvan je het bericht wilt lezen als je die hebt ontvangen"));
 
                 } else {
->>>>>>> develop
                     if (cooldown.containsKey(p)) {
                         long secondsleft = ((cooldown.get(p) / 1000) + returnTime.get(p)) - (System.currentTimeMillis() / 1000);
                         if (secondsleft >= 0) { //Is meer dan of is 0
                             p.sendMessage(Utils.chat("&cJe postduif is nog niet teruggekeerd wacht nog &4" + secondsleft + " &cseconden"));
                         } else {
-<<<<<<< HEAD
-                            if (p.getInventory().getItemInHand().getType().equals(Material.WRITTEN_BOOK) || p.getInventory().getItemInHand().getType().equals(Material.BOOK_AND_QUILL)) {
-                                Player target = plugin.getServer().getPlayer(args[0]);
-                                if (target != null) {
-                                    if (!p.equals(target)) {
-                                        // Pytagoras om de diagonale lengte uit te rekenen tussen de twee personen en
-                                        // dat gedeelt door 10 om de tijd uit te rekenen
-                                        int returnTimeNumber = (int) Math.round(Math.sqrt(Math.pow(target.getLocation().getX() - p.getLocation().getX(), 2) + Math.pow(target.getLocation().getZ() - p.getLocation().getZ(), 2)) / 50);
-                                        if (returnTimeNumber < 0) returnTimeNumber *= -1;
-                                        returnTime.put(p, returnTimeNumber * 2);
-                                        cooldown.put(p, System.currentTimeMillis());
-                                        p.sendMessage(Utils.chat("&aJe bericht is succesvol verzonden!"));
-                                        message.put(p, p.getInventory().getItemInHand());
-                                        p.getInventory().setItemInHand(null);
-                                        sendArrival(p, target, returnTimeNumber);
-                                    } else p.sendMessage(Utils.chat("&cJe kan geen postduif naar jezelf sturen!"));
-                                } else
-                                    p.sendMessage(Utils.chat("&cEen speler genaamd '" + args[0] + "' bestaat niet of is niet online!"));
-                            } else
-                                p.sendMessage(Utils.chat("&cJe hebt een gesigned book of een book and quill met het bericht in je hand nodig om het bericht te kunnen versturen"));
-                        }
-
-                    } else {
-                        if (p.getInventory().getItemInHand().getType().equals(Material.WRITTEN_BOOK) || p.getInventory().getItemInHand().getType().equals(Material.BOOK_AND_QUILL)) {
-=======
                             if (p.getInventory().getItemInMainHand().getType().equals(Material.WRITTEN_BOOK) || p.getInventory().getItemInMainHand().getType().equals(Material.BOOK_AND_QUILL)) {
                                 Player target = plugin.getServer().getPlayer(args[0]);
                                 if (target != null) {
@@ -147,7 +93,6 @@ public class PostDuif implements CommandExecutor {
 
                     } else {
                         if (p.getInventory().getItemInMainHand().getType().equals(Material.WRITTEN_BOOK) || p.getInventory().getItemInMainHand().getType().equals(Material.BOOK_AND_QUILL)) {
->>>>>>> develop
                             Player target = plugin.getServer().getPlayer(args[0]);
                             if (target != null) {
                                 if (!p.equals(target)) {
@@ -158,20 +103,6 @@ public class PostDuif implements CommandExecutor {
                                     returnTime.put(p, returnTimeNumber * 2);
                                     cooldown.put(p, System.currentTimeMillis());
                                     p.sendMessage(Utils.chat("&aJe bericht is succesvol verzonden!"));
-<<<<<<< HEAD
-                                    message.put(p, p.getInventory().getItemInHand());
-                                    p.getInventory().setItemInHand(null);
-                                    sendArrival(p, target, returnTimeNumber);
-                                } else p.sendMessage(Utils.chat("&cJe kan geen postduif naar jezelf sturen!"));
-                            } else
-                                p.sendMessage(Utils.chat("&cEen speler genaamd '" + args[0] + "' bestaat niet of is niet online!"));
-                        } else
-                            p.sendMessage(Utils.chat("&cJe hebt een gesigned book of een book and quill met het bericht in je hand nodig om het bericht te kunnen versturen"));
-                    }
-                }
-            } else
-                p.sendMessage(Utils.chat("&cGeef alstjeblieft een speler op waar je het bericht naar wilt sturen of open een bericht met '/postduif open <naam>' als je een bericht hebt ontvangen"));
-=======
 
                                     List<ItemStack> messages = new ArrayList<>();
                                     if(message.get(p) != null && !message.get(p).isEmpty()) messages.addAll(message.get(p));
@@ -185,7 +116,6 @@ public class PostDuif implements CommandExecutor {
                     }
                 }
             } else p.sendMessage(Utils.chat("&cGeef alstjeblieft een speler op waar je het bericht naar wilt sturen of open een bericht met '/postduif open <naam>' als je een bericht hebt ontvangen"));
->>>>>>> develop
         } else p.sendMessage(Utils.chat("&cJe kan dit command niet uitvoeren!"));
 
         return false;
@@ -194,14 +124,10 @@ public class PostDuif implements CommandExecutor {
     public void sendArrival(final Player from, final Player to, int timeInSeconds) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
-<<<<<<< HEAD
-                postduif.put(from, to);
-=======
                 List<Player> values = new ArrayList<>();
                 values.add(to);
                 if(postduif.get(from) != null && !postduif.get(from).isEmpty()) values.addAll(postduif.get(from));
                 postduif.put(from, values);
->>>>>>> develop
                 TextComponent tc = new TextComponent();
                 tc.setText(Utils.chat("&aJe hebt een bericht ontvangen van &2" + from.getName() + "&a! Klik op dit &abericht om het te lezen"));
                 tc.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Utils.chat("&aKlik op dit bericht om het bericht van &2" + from.getName() + " &ate lezen")).create()));
