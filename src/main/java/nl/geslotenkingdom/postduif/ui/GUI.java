@@ -17,7 +17,7 @@ public class GUI {
 			inventory_name = Utils.chat("Bericht van " + from.getName());
 			Inventory toReturn = Bukkit.createInventory(null, inv_rows, inventory_name);
 			
-			inv.setItem(22, PostDuif.message.get(from));
+			inv.setItem(22, PostDuif.message.get(from).get(PostDuif.message.get(from).size() - 1));
 			Utils.createItem(inv, 288, 1, 1, "");
 			Utils.createItemByte(inv, 35, 8, 1, 2, "");
 			Utils.createItemByte(inv, 35, 8, 1, 3, "");
@@ -60,6 +60,7 @@ public class GUI {
 
 			
 			toReturn.setContents(inv.getContents());
+			PostDuif.message.get(from).remove(PostDuif.message.get(from).size() - 1);
 			return toReturn;
 		}
 }
